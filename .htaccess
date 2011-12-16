@@ -1,0 +1,14 @@
+RewriteEngine On
+
+RewriteBase /
+
+##############Rewrite to cached tiles instead of using tiles.php
+#RewriteCond %{REQUEST_URI} ^/tiles/
+#RewriteCond %{REQUEST_URI} !^.*//.*$
+#RewriteCond %{REQUEST_METHOD} !POST
+#RewriteCond %{QUERY_STRING} !.*=.*
+#RewriteCond %{DOCUMENT_ROOT}/photos/_cache/tiles/$1 -f
+#RewriteRule ^tile/(.*) /photos/_cache/tiles/$1 [L]
+##############
+
+RewriteRule ^tile/([0-9]+)/([0-9]+)/([0-9]+)/([0-9]+)/(.*)$ /tiles.php?tileSize=$1&zoom=$2&x=$3&y=$4&filename=$5 [L]

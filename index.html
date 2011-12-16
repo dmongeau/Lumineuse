@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Lumineuse</title>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="lumineuse.js"></script>
+    <script type="text/javascript">
+    	$(function() {
+			
+			var photos = ['1.jpg','2.jpg','2.jpg','1.jpg'];
+			
+			var lumineuse = new Lumineuse($('#lumineuse').get(0),photos,{
+				'center' : {
+					'lat' : 2,
+					'lng' : 1
+				},
+				'tileSize' : 256,
+				'maxZoom' : 4
+			});
+			
+			
+			lumineuse.render();
+			
+		});
+    </script>
+    
+    <style type="text/css">
+		
+		html, body, #lumineuse {
+			margin:0;
+			padding:0;
+			width:100%;
+			height:100%;
+			outline:none;	
+		}
+	
+		#lumineuse {
+			position:relative;
+			border:solid 1px #fff;
+			overflow:hidden;
+			z-index:5;
+		}
+		#lumineuse .tile {
+			background: #fff;
+		}
+	</style>
+    
+</head>
+
+<body>
+
+	<div id="lumineuse" style="width:100%; height:100%;"></div>
+
+</body>
+</html>
