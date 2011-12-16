@@ -5,6 +5,7 @@
  * Display one or many images using google maps
  *
  * @author David Mongeau-Petitpas <dmp@ecoutez.ca>
+ * @version 0.1
  *
  */
 var Lumineuse = function(el,images,opts) {
