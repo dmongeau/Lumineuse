@@ -10,7 +10,7 @@
  */
 var Lumineuse = function(el,images,opts) {
 	
-	this.opts = jQuery.extend({
+	this.opts = Lumineuse._extend({
 		'center' : {
 			'x':500,
 			'y':275
@@ -44,9 +44,9 @@ var Lumineuse = function(el,images,opts) {
 		}
 		window['initializeMap'] = function() {
 			origCallback();
-			self.onLoad.call(self);
+			self._onLoad.call(self);
 		};
-		Lumineuse.loadScript('initializeMap');
+		Lumineuse._loadScript('initializeMap');
 	} else {
 		this.loaded = true;
 	}
@@ -57,7 +57,7 @@ var Lumineuse = function(el,images,opts) {
  * onLoad event
  *
  */
-Lumineuse.prototype.onLoad = function() {
+Lumineuse.prototype._onLoad = function() {
 
 	this.loaded = true;
 	
@@ -191,18 +191,6 @@ Lumineuse.prototype.setMap = function(map) {
 
 /*
  *
- * Load google maps script
- *
- */
-Lumineuse.loadScript = function(callback) {
-	var script = document.createElement("script");
-	script.type = "text/javascript";
-	script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&v=3&callback="+escape(callback);
-	document.body.appendChild(script);
-};
-
-/*
- *
  * Map projection
  *
  */
@@ -258,11 +246,12 @@ Lumineuse.MapType.prototype.name = null;
 Lumineuse.MapType.prototype.projection = null;
 Lumineuse.MapType.prototype.getTile = function(coord, zoom, ownerDocument) {
 
-	var $tile = $('<div class="tile"></div>').css({
-		'width' : this.opts.tileSize+'px',
-		'height' : this.opts.tileSize+'px'
-	});
+	var tile = document.createElement('div');
+	var classes = ['tile'];
+	tile.style.width = this.opts.tileSize+'px';
+	tile.style.height = this.opts.tileSize+'px';
 	
+	var tileSize = this.opts.tileSize;
 	var tilesCount = Math.pow(2,zoom);
 	var max = tilesCount*this.size;
 	
@@ -276,20 +265,54 @@ Lumineuse.MapType.prototype.getTile = function(coord, zoom, ownerDocument) {
 		if(this.images[index]) {
 			var x = coord.x-tileX;
 			var y = coord.y-tileY;
-			$tile.css({
-				'backgroundImage' : 'url(/tile/'+this.opts.tileSize+'/'+zoom+'/'+x+'/'+y+'/'+this.images[index]+')',
-				'backgroundRepeat' : 'no-repeat'
-			}).addClass('tile-click');
+			var url = '/tile/'+tileSize+'/'+zoom+'/'+x+'/'+y+'/'+this.images[index];
+			tile.style.backgroundImage = 'url('+url+')';
+			tile.style.backgroundRepeat = 'no-repeat';
+			classes.push('tile-click');
 		}
 	} else {
-		$tile.addClass('tile-empty');
+		classes.push('tile-empty');
 	}
 	
-	return $tile.get(0);
+	tile.className = classes.join(' ');
+	
+	return tile;
 	
 };
 Lumineuse.MapType.prototype.releaseTile = function(tile) {
 	$(tile).remove();
+};
+
+
+
+
+/*
+ *
+ * Load google maps script
+ *
+ */
+Lumineuse._loadScript = function(callback) {
+	var script = document.createElement("script");
+	script.type = "text/javascript";
+	script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&v=3&callback="+escape(callback);
+	document.body.appendChild(script);
+};
+
+
+
+/*
+ *
+ * Extend function
+ *
+ */
+Lumineuse._extend = function() {
+	var newobj = {};
+	for(var i = 0; i < arguments.length; i++) {
+		for(key in arguments[i]) {
+			newobj[key] = arguments[i][key];
+		}
+	}
+	return newobj;
 };
 
 
