@@ -6,7 +6,7 @@ Files
 ---------
 
 - **lumineuse.js**  
-Main class that extends google maps.
+Main class that extends google maps to display one or many images.
 
 - **index.html**  
 Example
@@ -20,3 +20,6 @@ tiles.php?zoom=1&x=0&y=1&tileSize=256&filename=1.jpg
 Rewrite rules to access tiles with better url.   
 /tile/256/1/0/1/1.jpg   
 /tile/tileSize/zoom/x/y/filename
+
+- **/photos**   
+Folder for the photos used in the example  
