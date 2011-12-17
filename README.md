@@ -13,8 +13,7 @@ Example
 
 - **tiles.php**  
 PHP script that convert large image into tiles.  
-The parameters are :  
-tiles.php?zoom=1&x=0&y=1&tileSize=256&filename=1.jpg  
+The parameters are : tiles.php?zoom=1&x=0&y=1&tileSize=256&filename=1.jpg  
 
 - **.htaccess**   
 Rewrite rules to access tiles with better url.   
